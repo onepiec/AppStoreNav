@@ -452,7 +452,8 @@ extension HXNavigationController {
                         vc.hx_navLargeTitleTagView?.alpha = 1
                     }
                     for subView in self.largeTitleSuperView!.allSubViews {
-                        if let titleLab:UILabel = subView as? UILabel , titleLab.isUserInteractionEnabled == false {
+                        if let titleLab:UILabel = subView as? UILabel , titleLab.text == vc.title || titleLab.text == vc.navigationItem.title {
+                            vc.hx_navLargeTitleTagView?.tag = 10
                             subView.addSubview(vc.hx_navLargeTitleTagView!)//
                             vc.hx_navLargeTitleTagView!.snp.makeConstraints { (make) in
                                 make.leading.equalTo(titleLab.snp.trailing).offset(5)
@@ -466,6 +467,10 @@ extension HXNavigationController {
                     UIView.animate(withDuration: 0.5) {
                         vc.hx_navLargeTitleTagView?.alpha = 1
                     }
+                }
+            }else {
+                if let subView = self.largeTitleSuperView?.subviews.first(where: {$0.tag == 10}) {
+                    subView.removeFromSuperview()
                 }
             }
         }
@@ -504,6 +509,7 @@ extension HXNavigationController {
             if vc.hx_navLargeTitleHeadView != nil {
                 
                 if vc.hx_navLargeTitleHeadView!.superview == nil {
+                    vc.hx_navLargeTitleHeadView?.tag = 20
                     self.largeTitleSuperView?.addSubview(vc.hx_navLargeTitleHeadView!)
                     vc.hx_navLargeTitleHeadView?.alpha = 0
                     UIView.animate(withDuration: 0.5) {
@@ -518,6 +524,10 @@ extension HXNavigationController {
                     UIView.animate(withDuration: 0.5) {
                         vc.hx_navLargeTitleHeadView?.alpha = 1
                     }
+                }
+            }else {
+                if let subView = self.largeTitleSuperView?.subviews.first(where: {$0.tag == 20}) {
+                    subView.removeFromSuperview()
                 }
             }
         }

@@ -217,6 +217,11 @@ extension ViewController:UISearchBarDelegate {
 //MARK: TableView
 extension ViewController:UITableViewDelegate,UITableViewDataSource {
     private func scrollViewDidEndScroll(_ scrollView: UIScrollView) {
+        
+        if self.isLargeTitle == true {
+            self.tableView.contentOffset = CGPoint.init(x: 0, y: floor(self.tableView.contentOffset.y))
+        }
+        
         if self.isLargeTitle == false && self.isShowSearch == true{
             if scrollView.contentOffset.y < 0 && scrollView.contentOffset.y > -LargeViewHeight {
                 
