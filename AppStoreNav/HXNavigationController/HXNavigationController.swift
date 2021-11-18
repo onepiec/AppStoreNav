@@ -464,15 +464,28 @@ extension HXNavigationController {
                         }
                     }
                 }else if vc.hx_navLargeTitleTagView?.alpha == 0 {
+                    for subView in self.largeTitleSuperView!.allSubViews {
+                        if let titleLab:UILabel = subView as? UILabel , titleLab.text == vc.title || titleLab.text == vc.navigationItem.title {
+                            if vc.hx_navLargeTitleTagView?.superview != subView {
+                                subView.addSubview(vc.hx_navLargeTitleTagView!)//
+                                vc.hx_navLargeTitleTagView!.snp.makeConstraints { (make) in
+                                    make.leading.equalTo(titleLab.snp.trailing).offset(5)
+                                    make.bottom.equalTo(-8)
+                                    make.size.equalTo(24)
+                                }
+                            }
+                        }
+                    }
                     UIView.animate(withDuration: 0.5) {
                         vc.hx_navLargeTitleTagView?.alpha = 1
                     }
                 }
-            }else {
-                if let subView = self.largeTitleSuperView?.subviews.first(where: {$0.tag == 10}) {
-                    subView.removeFromSuperview()
-                }
             }
+//             else {
+//                 if let subView = self.largeTitleSuperView?.subviews.first(where: {$0.tag == 10}) {
+//                     subView.removeFromSuperview()
+//                 }
+//             }
         }
     }
     private func reloadTagView(fromVC:HXBaseViewController ,toVC:HXBaseViewController) {
@@ -525,11 +538,12 @@ extension HXNavigationController {
                         vc.hx_navLargeTitleHeadView?.alpha = 1
                     }
                 }
-            }else {
-                if let subView = self.largeTitleSuperView?.subviews.first(where: {$0.tag == 20}) {
-                    subView.removeFromSuperview()
-                }
             }
+//             else {
+//                 if let subView = self.largeTitleSuperView?.subviews.first(where: {$0.tag == 20}) {
+//                     subView.removeFromSuperview()
+//                 }
+//             }
         }
     }
     private func reloadHeadView(fromVC:HXBaseViewController ,toVC:HXBaseViewController) {
